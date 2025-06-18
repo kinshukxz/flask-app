@@ -1,12 +1,18 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
 import json
 import pymongo
+import os
+from dotenv import load_dotenv
 from bson import json_util
+
+# ✅ Load environment variables from .env (for local development)
+load_dotenv()
 
 app = Flask(__name__)
 
-# ✅ MongoDB Atlas Connection (correct URI inserted)
-client = pymongo.MongoClient("mongodb+srv://kinshuksriv9191:5XzuUyvpg8Y3JMdN@kinshuk-cluster.jxhbz9a.mongodb.net/?retryWrites=true&w=majority")
+# ✅ MongoDB Atlas Connection via Environment Variable
+MONGO_URI = os.getenv("MONGO_URI")
+client = pymongo.MongoClient(MONGO_URI)
 db = client["mydatabase"]
 collection = db["users"]
 
